@@ -59,6 +59,13 @@ jobs:
         run: |
            for dir in */; do
             if [ -f "$dir/package.json" ]; then
+              echo "Running npm install in $dir..."
+              (cd "$dir" && npm install)
+            fi
+           done
+           
+           for dir in */; do
+            if [ -f "$dir/package.json" ]; then
               echo "Running npm start in $dir..."
               (cd "$dir" && npm start)
             fi
