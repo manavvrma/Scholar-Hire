@@ -30,12 +30,7 @@ jobs:
             fi
           done
 
-          for dir in */; do
-            if [ -f "$dir/package.json" ]; then
-              echo "Running npm start in $dir..."
-              (cd "$dir" && npm start)
-            fi
-          done
+        
 
       - name: Zip artifact for deployment
         run: zip -r release.zip .
