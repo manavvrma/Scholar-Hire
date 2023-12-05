@@ -30,8 +30,6 @@ jobs:
             fi
           done
 
-        
-
       - name: Zip artifact for deployment
         run: zip -r release.zip .
 
@@ -57,6 +55,12 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip -o release.zip
 
+      - name: Install and start the app in each folder
+        run: |
+          for folder in */; do
+            (cd "$folder" && npm install && npm start &)
+          done
+
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
@@ -65,3 +69,5 @@ jobs:
           slot-name: 'Production'
           package: .
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_434EC98BA0AB42F4A345989726521E3D }}
+
+
