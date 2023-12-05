@@ -57,9 +57,12 @@ jobs:
 
       - name: Install and start the app in each folder
         run: |
-          for folder in */; do
-            (cd "$folder" && npm install && npm start &)
-          done
+           for dir in */; do
+            if [ -f "$dir/package.json" ]; then
+              echo "Running npm install in $dir..."
+              (cd "$dir" && npm install && npm start &)
+            fi
+           done
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
